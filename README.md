@@ -11,7 +11,7 @@ tomcat7，maven3.5，java8，mysql，redis，SSM框架， 富文本编辑器wang
 
 ## 数据库是很简单的6张表：
 文章表、轮播图表、分类表、评论表、友链表和用户表。
-
+![表结构](https://github.com/frozen-lin/Blog/blob/master/images/%E8%A1%A8%E7%BB%93%E6%9E%84.png);
 ## redis作为缓存的存储策略：
 hash："categoryHash"（存储全部分类）、 "articleHash"（存储全部文章）、 "linkHash"（存储全部友链）、"commentHash"（存储全部评论）、"carouselHash"（存储全部轮播图）。
 
