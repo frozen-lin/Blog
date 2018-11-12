@@ -11,7 +11,7 @@ tomcat7，maven3.5，java8，mysql，redis，SSM框架， 富文本编辑器wang
 
 ## 数据库是很简单的6张表：
 文章表、轮播图表、分类表、评论表、友链表和用户表。
-
+![表结构](https://github.com/frozen-lin/Blog/blob/master/images/%E8%A1%A8%E7%BB%93%E6%9E%84.png);
 ## redis作为缓存的存储策略：
 hash："categoryHash"（存储全部分类）、 "articleHash"（存储全部文章）、 "linkHash"（存储全部友链）、"commentHash"（存储全部评论）、"carouselHash"（存储全部轮播图）。
 
@@ -35,3 +35,9 @@ value："username:"+username(存储最近登录的用户，10天过期，过期�
 <Connector port="8080"  protocol="HTTP/1.1" connectionTimeout="20000" redirectPort="8443" URIEncoding="UTF-8" />
 
 不添加的话该项目的get请求会出现乱码。
+## 前台预览图片:
+![前台](https://github.com/frozen-lin/Blog/blob/master/images/%E5%89%8D%E5%8F%B0.png);
+## 后台预览图片:
+![后台1](https://github.com/frozen-lin/Blog/blob/master/images/%E5%90%8E%E5%8F%B01.png);
+![后台2](https://github.com/frozen-lin/Blog/blob/master/images/%E5%90%8E%E5%8F%B02.png);
+![后台3](https://github.com/frozen-lin/Blog/blob/master/images/%E5%90%8E%E5%8F%B03.png);
