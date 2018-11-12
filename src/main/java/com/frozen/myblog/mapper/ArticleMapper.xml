@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.frozen.myblog.mapper.ArticleMapper">
+	<resultMap type="Article" id="ArticleResultMap">
+		<id property="articleId" column="article_id" />
+		<result property="articleTitle" column="article_title" />
+		<result property="articleBrief" column="article_brief" />
+		<result property="articleContent" column="article_content" />
+		<result property="articleTime" column="article_time" />
+		<association property="category" javaType="Category">
+			<id property="categoryId" column="category_id" />
+			<result property="categoryName" column="category_name" />
+		</association>
+		<collection property="commentList" javaType="list" ofType="Comment">
+			<id property="commentId" column="comment_id" />
+			<result property="commentContent" column="comment_content" />
+			<result property="commentTime" column="comment_time" />
+			<result property="username" column="username" />
+		</collection>
+	</resultMap>
+
+	<select id="queryCountByCategory" parameterType="Integer"
+		resultType="Integer">
+		SELECT count(*)
+		FROM t_article
+		WHERE category_id =#{value};
+	</select>
+
+	<select id="queryArticleList" resultMap="ArticleResultMap">
+		SELECT
+		t1.*,t2.comment_content,t2.comment_id,t2.comment_time,t2.username
+		FROM
+		(SELECT a.*,c.category_name
+		FROM t_article a,t_category c
+		WHERE
+		a.category_id=c.category_id)
+		t1 LEFT OUTER JOIN t_comment t2
+		ON
+		t1.article_id=t2.article_id;
+	</select>
+
+	<select id="queryCountByParameter" parameterType="String"
+		resultType="Integer">
+		SELECT count(*)
+		FROM t_article
+		WHERE article_Title LIKE
+		#{value};
+	</select>
+
+	<select id="queryArticlePage" parameterType="Map"
+		resultType="Integer">
+		SELECT article_id FROM t_article
+		<where>
+			<if test="categoryId !=null and categoryId != 0">
+				category_id = #{categoryId}
+			</if>
+			<if test="q !=null and q != ''">
+				AND article_title LIKE #{q}
+			</if>
+		</where>
+		ORDER BY article_time DESC
+		LIMIT #{start},#{limit};
+	</select>
+
+	<select id="queryPreArticle" parameterType="Integer"
+		resultMap="ArticleResultMap">
+		SELECT article_id,article_title
+		FROM t_article
+		WHERE
+		article_id &lt; #{value}
+		ORDER BY article_id DESC
+		LIMIT 1;
+	</select>
+
+	<select id="queryNextArticle" parameterType="Integer"
+		resultMap="ArticleResultMap">
+		SELECT article_id,article_title
+		FROM t_article
+		WHERE
+		article_id &gt; #{value}
+		ORDER BY article_id
+		LIMIT 1;
+	</select>
+
+	<insert id="saveArticle" parameterType="Article">
+		<selectKey keyProperty="articleId" order="AFTER"
+			resultType="Integer">
+			SELECT LAST_INSERT_ID();
+		</selectKey>
+		INSERT INTO t_article
+		(article_title,article_brief,article_content,article_time,category_id)
+		VALUES(#{articleTitle},#{articleBrief},#{articleContent},#{articleTime},#{category.categoryId});
+	</insert>
+	<delete id="deleteArticleById" parameterType="Integer">
+		DELETE FROM
+		t_article WHERE article_id = #{value};
+	</delete>
+
+	<update id="updateArticle" parameterType="Article">
+		UPDATE t_article
+		<set>
+			<if test="articleTitle != null and articleTitle !=''">
+				article_title = #{articleTitle},
+			</if>
+			<if test="articleBrief != null and articleBrief !=''">
+				article_brief = #{articleBrief},
+			</if>
+			<if test="articleContent != null and articleContent !=''">
+				article_content = #{articleContent},
+			</if>
+			<if test="articleTime != null">
+				article_time = #{articleTime},
+			</if>
+			<if test="category.categoryId != null">
+				category_id = #{category.categoryId}
+			</if>
+		</set>
+		WHERE article_id = #{articleId};
+	</update>
+</mapper>

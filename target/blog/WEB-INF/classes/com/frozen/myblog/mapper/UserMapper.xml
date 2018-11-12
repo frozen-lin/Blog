@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.frozen.myblog.mapper.UserMapper">	
+	<select id="queryUserByUsername" parameterType="String" resultType="User">
+		SELECT * FROM t_user WHERE username = #{value};
+	</select>
+	<select id="query1ByUsername" parameterType="String" resultType="Integer">
+		SELECT 1 FROM t_user WHERE username = #{value};
+	</select>
+	<insert id="saveUser" parameterType="User"  >
+		INSERT INTO t_user 
+		(username ,password) 
+		VALUES 
+		(#{username},#{password});
+	</insert>
+	
+	<insert id="saveVisitor" parameterType="String">
+		INSERT INTO t_user 
+		(username) 
+		VALUES 
+		(#{value});
+	</insert>
+	
+	<select id="queryCount" resultType="Integer">
+		SELECT COUNT(*) FROM t_user;
+	</select>
+</mapper>

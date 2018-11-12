@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.frozen.myblog.mapper.CategoryMapper">
+<resultMap type="Category" id="CategoryResultMap">
+	<id property="categoryId" column="category_id"/>
+	<result property="categoryName" column="category_name"/>
+</resultMap>
+  <insert id="saveCategory" parameterType="Category" >
+  	<selectKey keyProperty="categoryId" order="AFTER" resultType="Integer">
+  	SELECT LAST_INSERT_ID();
+  	</selectKey>
+  	INSERT INTO t_category 
+  	(category_name) VALUES (#{categoryName});
+  </insert>
+  
+  <select id="queryIdByName" resultType="Integer" parameterType="String">
+  SELECT category_id 
+  FROM t_category 
+  WHERE category_name = #{value};
+  </select>
+  
+  <select id="queryCategoryList" resultMap="CategoryResultMap" >
+  SELECT * FROM t_category;
+  </select>
+  
+  <delete id="deleteCategoryByID" parameterType="Integer">
+  DELETE FROM 
+  t_category 
+  WHERE category_id = #{value};
+  </delete>
+  
+  <update id="updateCategory" parameterType="Category">
+  UPDATE t_category 
+  SET category_name = #{categoryName} 
+  WHERE category_id = #{categoryId};
+  </update>
+</mapper>

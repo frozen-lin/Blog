@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper SYSTEM "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.frozen.myblog.mapper.CarouselMapper">
+  <resultMap type="Carousel" id="CarouselResultMap">
+  	<id property="carouselId" column="carousel_id"/>
+  	<result property="carouselUrl" column="carousel_url"/>
+  	<result property="carouselAuthor" column="carousel_author"/>
+  	<result property="carouselSign" column="carousel_sign"/>
+  	<result property="carouselOrder" column="carousel_order"/>
+  </resultMap>
+  
+  <select id="queryCarouselList" resultMap="CarouselResultMap">
+  SELECT * FROM t_carousel ;
+  </select>
+  
+  <insert id="save" parameterType="Carousel" >
+  <selectKey keyProperty="carouselId" resultType="Integer">
+  	SELECT LAST_INSERT_ID();
+  </selectKey>
+  INSERT INTO t_carousel 
+  (carousel_url,carousel_author,carousel_sign,carousel_order)
+  VALUES(#{carouselUrl},#{carouselAuthor},#{carouselSign},#{carouselOrder});
+  </insert>
+  
+  <update id="updateCarousel" parameterType="Carousel">
+  UPDATE t_carousel 
+  <set>
+  	<if test="carouselAuthor !=null and carouselAuthor != '' ">
+  		carousel_author =#{carouselAuthor}
+  	</if>
+  	  	<if test="carouselSign !=null and carouselSign != '' ">
+  		carousel_sign =#{carouselSign}
+  	</if>
+  	  	<if test="carouselOrder !=null ">
+  		carousel_order = #{carouselOrder}
+  	</if>
+  </set>
+  WHERE carousel_id = #{carouselId};
+  </update>
+  
+  <delete id="deleteCarouselById" parameterType="Integer">
+  DELETE FROM t_carousel WHERE carousel_id = #{value};
+  </delete>
+</mapper>

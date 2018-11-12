@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+<!-- redis配置 -->
+<bean id="poolConfig" class="redis.clients.jedis.JedisPoolConfig">
+	<property name="minIdle" value="3"></property>
+	<property name="maxIdle" value="10"></property>
+	<property name="maxTotal" value="30"></property>
+	<property name="maxWaitMillis" value="6000"></property>
+</bean>
+<!-- redis连接工厂 -->
+<bean id="connectionFactory" class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory">
+	<property name="hostName" value="${redis.hostname}"></property>
+	<property name="port" value="${redis.port}"></property>
+	<property name="poolConfig" ref="poolConfig"></property>
+</bean>
+
+<!-- redis操作 -->
+<!--共用的序列化器  -->
+<bean id="StringRedisSerializer" class="org.springframework.data.redis.serializer.StringRedisSerializer"></bean>
+<!--通用redisTemplate  -->
+<bean id="redisTemplate" class="org.springframework.data.redis.core.RedisTemplate">
+	<property name="connectionFactory" ref="connectionFactory"></property>
+	<!-- 序列化器 -->
+	<property name="keySerializer" ref="StringRedisSerializer">
+	</property>
+	<property name="valueSerializer">
+		<bean class="org.springframework.data.redis.serializer.JdkSerializationRedisSerializer"></bean>
+	</property>
+</bean>
+<!--为了实现自增而添加的redisTemplate  -->
+<bean id="incrmentRedisTemplate" class="org.springframework.data.redis.core.StringRedisTemplate">
+	<property name="connectionFactory" ref="connectionFactory"></property>
+	<!-- 序列化器 -->
+	<property name="keySerializer" ref="StringRedisSerializer">
+	</property>
+	<property name="valueSerializer" ref="StringRedisSerializer">
+	</property>
+</bean>
+
+
+
+</beans>
