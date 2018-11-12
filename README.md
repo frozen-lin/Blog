@@ -2,6 +2,7 @@
 ## 本项目是基于SSM框架的简单易上手的个人博客系统，适合ssm初学者练手使用。    
 预览地址:前台地址 :http://134.175.88.157 后台地址:http://134.175.88.157/admin    管理员默认测试账号:admin 密码:admin123，有兴趣的童鞋可以去测试玩玩。
 blog.sql是导出的数据库结构，可自行导入。
+导入项目时修改db.properties和
 ## 使用到的技术及项目环境：
 tomcat7，maven3.5，java8，mysql，redis，SSM框架， 富文本编辑器wangEditor，前端框架:前台bootstrap，后台layui(使用两个前端框架的目的就是练手)，ajax，实现restful风格等。
 
