@@ -36,8 +36,8 @@ value："username:"+username(存储最近登录的用户，10天过期，过期�
 
 不添加的话该项目的get请求会出现乱码。
 ## 前台预览图片:
-![前台](https://github.com/frozen-lin/Blog/blob/master/images/%E5%89%8D%E5%8F%B0.png);
+![前台](https://github.com/frozen-lin/Blog/blob/master/images/%E5%89%8D%E5%8F%B0.png)
 ## 后台预览图片:
-![后台1](https://github.com/frozen-lin/Blog/blob/master/images/%E5%90%8E%E5%8F%B01.png);
-![后台2](https://github.com/frozen-lin/Blog/blob/master/images/%E5%90%8E%E5%8F%B02.png);
-![后台3](https://github.com/frozen-lin/Blog/blob/master/images/%E5%90%8E%E5%8F%B03.png);
+![后台1](https://github.com/frozen-lin/Blog/blob/master/images/%E5%90%8E%E5%8F%B01.png)
+![后台2](https://github.com/frozen-lin/Blog/blob/master/images/%E5%90%8E%E5%8F%B02.png)
+![后台3](https://github.com/frozen-lin/Blog/blob/master/images/%E5%90%8E%E5%8F%B03.png)
